@@ -1,0 +1,57 @@
+version: "3.3"
+x-environment: &environment
+  environment:
+    # The url of your Formbricks instance used in the admin panel
+    WEBAPP_URL: ${DOMAIN}
+
+    # PostgreSQL DB for Formbricks to connect to
+    DATABASE_URL: "postgresql://postgres:${ADMIN_PASSWORD}@postgres:5432/formbricks?schema=public"
+
+    # Uncomment to enable a dedicated connection pool for Prisma using Prisma Data Proxy
+    # Cold boots will be faster and you'll be able to scale your DB independently of your app.
+    # @see https://www.prisma.io/docs/data-platform/data-proxy/use-data-proxy
+    # PRISMA_GENERATE_DATAPROXY=true
+    PRISMA_GENERATE_DATAPROXY:
+
+    # NextJS Auth
+    # @see: https://next-auth.js.org/configuration/options#nextauth_secret
+    # You can use: `openssl rand -base64 32` to generate one
+    NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+
+    # Set this to your public-facing URL, e.g., https://example.com
+    # You do not need the NEXTAUTH_URL environment variable in Vercel.
+    NEXTAUTH_URL: https://${DOMAIN}
+
+    # PostgreSQL password
+    POSTGRES_PASSWORD: ${ADMIN_PASSWORD}
+
+services:
+  postgres:
+    restart: always
+    image: elestio/postgres:15
+    ports:
+      - 172.17.0.1:2432:5432
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    <<: *environment
+
+  formbricks:
+    restart: always
+    image: formbricks/formbricks:latest
+    depends_on:
+      - postgres
+    ports:
+      - 172.17.0.1:3765:3000
+    <<: *environment
+
+  pgadmin4:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${ADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: 8080
+    ports:
+      - "172.17.0.1:8180:8080"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
