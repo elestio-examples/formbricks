@@ -6,10 +6,10 @@ echo "Waiting for software to be ready ..."
 sleep 30s;
 
 
-# docker-compose exec -T database sh -c "psql -U postgres postgres <<EOF
-# \c cal
-# CREATE EXTENSION pgcrypto;
-# INSERT INTO users (username, name, email, password, role, locale) VALUES ('admin', 'admin', '${ADMIN_EMAIL}', crypt('${ADMIN_PASSWORD}', gen_salt('bf', 8)), 'ADMIN', 'en');
-# EOF";
+docker-compose exec -T postgres sh -c "psql -U postgres formbricks <<EOF
+\c cal
+CREATE EXTENSION pgcrypto;
+INSERT INTO User (name, email, password, onboardingCompleted) VALUES ('root', '${ADMIN_EMAIL}', crypt('${ADMIN_PASSWORD}', gen_salt('bf', 8)), 'false');
+EOF";
 
 # sleep 10s;
