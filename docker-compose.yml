@@ -1,7 +1,7 @@
 version: "3.3"
 x-environment: &environment
   environment:
-    WEBAPP_URL: ${DOMAIN}
+    WEBAPP_URL: https://${DOMAIN}
     DATABASE_URL: "postgresql://postgres:${ADMIN_PASSWORD}@postgres:5432/formbricks?schema=public"
     PRISMA_GENERATE_DATAPROXY:
     NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
