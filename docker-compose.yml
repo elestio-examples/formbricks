@@ -7,7 +7,7 @@ x-environment: &environment
     NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
     NEXTAUTH_URL: https://${DOMAIN}
     POSTGRES_PASSWORD: ${ADMIN_PASSWORD}
-
+    ENCRYPTION_KEY: ${ENCRYPTION_KEY}
 services:
   postgres:
     restart: always
