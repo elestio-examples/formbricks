@@ -8,6 +8,12 @@ x-environment: &environment
     NEXTAUTH_URL: https://${DOMAIN}
     POSTGRES_PASSWORD: ${ADMIN_PASSWORD}
     ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+    MAIL_FROM: ${MAIL_FROM}
+    SMTP_HOST: ${SMTP_HOST}
+    SMTP_PORT: ${SMTP_PORT}
+    SMTP_SECURE_ENABLED: ${SMTP_SECURE_ENABLED}
+    SMTP_USER: ${SMTP_USER}
+    SMTP_PASSWORD: ${SMTP_PASSWORD}
 services:
   postgres:
     restart: always
