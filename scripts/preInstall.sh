@@ -3,6 +3,7 @@ set -o allexport; source .env; set +o allexport;
 
 NEXTAUTH_SECRET=$(openssl rand -base64 32)
 ENCRYPTION_KEY=$(openssl rand -hex 32)
+CRON_SECRET=$(openssl rand -hex 32)
 
 cat /opt/elestio/startPostfix.sh > post.txt
 filename="./post.txt"
@@ -37,6 +38,7 @@ SMTP_PORT=465
 SMTP_SECURE_ENABLED=1
 SMTP_USER=${SMTP_LOGIN}
 SMTP_PASSWORD=${SMTP_PASSWORD}
+CRON_SECRET=${CRON_SECRET}
 EOT
 
 cat <<EOT > ./servers.json
