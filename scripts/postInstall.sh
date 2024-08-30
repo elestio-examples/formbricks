@@ -3,10 +3,6 @@ set -o allexport; source .env; set +o allexport;
 
 #wait until the server is ready
 echo "Waiting for software to be ready ..."
-
-sed -i "s~DOMAIN_TO_CHANGE~${CI_CD_DOMAIN}~g" ./docker-compose.yml
-sed -i "s~0.0.0.0~${IP}~g" ./docker-compose.yml
-docker-compose up -d;
 sleep 30s;
 
 bcryptPassword=$(htpasswd -nbBC 10 root $ADMIN_PASSWORD)
