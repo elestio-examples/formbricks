@@ -3,6 +3,10 @@ set -o allexport; source .env; set +o allexport;
 
 #wait until the server is ready
 echo "Waiting for software to be ready ..."
+
+sed -i "s~DOMAIN_TO_CHANGE~${CI_CD_DOMAIN}~g" ./docker-compose.yml
+sed -i "s~0.0.0.0~${IP}~g" ./docker-compose.yml
+docker-compose up -d;
 sleep 30s;
 
 bcryptPassword=$(htpasswd -nbBC 10 root $ADMIN_PASSWORD)
@@ -18,3 +22,4 @@ curl http://${target}/api/v1/users \
   -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36' \
   --data-raw '{"name":"root","email":"'${ADMIN_EMAIL}'","password":"'${hashedPassword}'","inviteToken":null,"onboardingCompleted":false}' \
   --compressed
+  
