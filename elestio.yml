@@ -30,7 +30,8 @@ environments:
     value: "random_password"
   - key: "DOMAIN"
     value: "[CI_CD_DOMAIN]"
-
+  - key: "IP"
+    value: "[IP]"
 config:
   runTime: "dockerCompose"
   version: ""
