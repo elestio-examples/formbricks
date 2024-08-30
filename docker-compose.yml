@@ -29,7 +29,7 @@ services:
     restart: always
     image: formbricks/formbricks:${SOFTWARE_VERSION_TAG}
     extra_hosts:
-      - "DOMAIN_TO_CHANGE:0.0.0.0"
+      - $DOMAIN_TO_CHANGE:$IP
     depends_on:
       - postgres
     ports:
