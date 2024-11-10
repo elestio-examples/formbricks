@@ -18,7 +18,7 @@ x-environment: &environment
 services:
   postgres:
     restart: always
-    image: elestio/postgres:15
+    image: pgvector/pgvector:pg15
     ports:
       - 172.17.0.1:2432:5432
     volumes:
